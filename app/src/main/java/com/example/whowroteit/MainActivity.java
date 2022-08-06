@@ -3,6 +3,8 @@ package com.example.whowroteit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -41,8 +43,30 @@ public class MainActivity extends AppCompatActivity {
                                                     InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
-        new FetchBook(mbookTitle,mauthorName).execute(queryString);
-        // print loading in one of the textview to interact the user
-        mbookTitle.setText(R.string.loading);
+        // manages the nectwork connection
+        ConnectivityManager connMgr = (ConnectivityManager)
+                                            getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        // if context have the service of Connectivity then this will true
+        if (connMgr != null) {
+            // getting the networkInfo
+            networkInfo = connMgr.getActiveNetworkInfo();
+        }
+
+        // only search when there is connection to the network and queryString is not null
+        if(networkInfo != null && networkInfo.isConnected() && queryString.length() != 0) {
+            new FetchBook(mbookTitle,mauthorName).execute(queryString);
+            // print loading in one of the textview to interact the user
+            mbookTitle.setText(R.string.loading);
+            mauthorName.setText("");
+        } else {
+            if(queryString.length() == 0) {
+                mbookTitle.setText(R.string.no_search_term);
+                mauthorName.setText("");
+            } else {
+                mbookTitle.setText(R.string.no_network_connection);
+                mauthorName.setText("");
+            }
+        }
     }
 }

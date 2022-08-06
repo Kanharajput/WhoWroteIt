@@ -68,13 +68,16 @@ public class FetchBook extends AsyncTask<String,Void,String> {
             if(title != null && author != null) {
                 mtitleText.get().setText(title);                 // set the title of first book find in items array
                 mauthorName.get().setText(author);
+            } else {
+                mtitleText.get().setText(R.string.noResult);
+                mauthorName.get().setText("");
             }
-            else mtitleText.get().setText(R.string.noResult);
         }
         catch (JSONException e) {
             e.printStackTrace();
             // not receive a proper json object then pass no result string
             mtitleText.get().setText(R.string.noResult);
+            mauthorName.get().setText("");
         }
     }
 }

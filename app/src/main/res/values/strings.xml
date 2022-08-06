@@ -5,4 +5,6 @@
     <string name="button_title">Search Books</string>
     <string name="noResult">no results found</string>
     <string name="loading">loading....</string>
+    <string name="no_search_term">Please enter some term!</string>
+    <string name="no_network_connection">check your network connection</string>
 </resources>
