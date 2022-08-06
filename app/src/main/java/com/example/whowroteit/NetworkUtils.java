@@ -60,35 +60,29 @@ public class NetworkUtils {
                 stringBuilder.append("\n");
             }
 
+            // if length is 0 means there is nothing return by api
             if(stringBuilder.length() == 0) {
-                // string is null
                 return null;
             }
-
             // convert the stringBuilder to string and store in bookJSONSting
             bookJSONString = stringBuilder.toString();
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
-        }
-
-        finally {
+        } finally {
             // disconnect the connection if it connected
             if(urlConnection != null) {
                 urlConnection.disconnect();
             }
-
-            try {
-                if (reader != null) {
+            // close the reader
+            if(reader != null) {
+                try {
                     reader.close();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
                 }
             }
-            catch(IOException ioe) {
-                ioe.printStackTrace();
-            }
-
-            Log.d(LOGTAG,bookJSONString);
         }
+        Log.d(LOGTAG,bookJSONString);
         return bookJSONString;
     }
 }
