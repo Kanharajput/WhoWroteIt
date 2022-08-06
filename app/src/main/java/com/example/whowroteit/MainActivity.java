@@ -41,6 +41,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mbookInput = findViewById(R.id.bookInput);
         mauthorName = findViewById(R.id.authorText);
         mbookTitle = findViewById(R.id.titleText);
+
+        // let the activity know that the loader is running
+        // then only it will protect data from losing at a time of configuration change
+        // don't need to save the instance in bundle
+        if(getSupportLoaderManager().getLoader(0) != null) {
+            getSupportLoaderManager().initLoader(0,null,this);
+        }
     }
 
     public void searchBook(View view) {
