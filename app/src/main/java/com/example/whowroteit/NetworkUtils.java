@@ -22,6 +22,8 @@ public class NetworkUtils {
     private static final String MAX_RESULTS = "maxResults";
     // parameter to filter by print type
     private static final String PRINT_TYPE = "printType";
+    // parameter to filter by epub downlaod
+    private static final String EPUB_DOWNLOADABLE = "download";
 
     // this method will return the Book details which it will get the book api
     static String getBookInfo(String queryString) throws IOException {
@@ -36,11 +38,14 @@ public class NetworkUtils {
                             .appendQueryParameter(QUERY_PARAM,queryString)
                             .appendQueryParameter(MAX_RESULTS,"10")
                             .appendQueryParameter(PRINT_TYPE,"books")
+                            .appendQueryParameter(EPUB_DOWNLOADABLE,"epub")
                             .build();
 
             // now convert this uri to url
             URL requestUrl = new URL(builtURI.toString());
             // open the connection
+            // print the url
+            Log.d(LOGTAG, String.valueOf(requestUrl));
             urlConnection = (HttpURLConnection) requestUrl.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
@@ -82,7 +87,7 @@ public class NetworkUtils {
                 }
             }
         }
-        Log.d(LOGTAG,bookJSONString);
+        //Log.d(LOGTAG,bookJSONString);
         return bookJSONString;
     }
 }
